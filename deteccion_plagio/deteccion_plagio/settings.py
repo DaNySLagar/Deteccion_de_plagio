@@ -51,7 +51,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'gestion_documental.urls'
+ROOT_URLCONF = 'deteccion_plagio.urls'
 
 TEMPLATES = [
     {
@@ -69,7 +69,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'gestion_documental.wsgi.application'
+WSGI_APPLICATION = 'deteccion_plagio.wsgi.application'
 
 
 # Database

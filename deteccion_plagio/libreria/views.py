@@ -178,7 +178,7 @@ def deteccion(request):
 
                 texto = textoP
                 nombres.append(texto)
-                resultados = detect_plagiarism(texto)
+                resultados = detect_plagiarism(texto, "texto")
             
             elif len(documentos) > 0:
                 
