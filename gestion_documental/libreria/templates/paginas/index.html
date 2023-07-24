@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mi Formulario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #606160;
+        }
+
+        .card-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .izquierda {
+            flex-basis: 27%; /* Div izquierdo ocupa el 30% */
+            background-color: #ffffff;
+
+            max-height: 600px; /* Altura máxima de la sección de resultados */
+            overflow-y: scroll; /* Añadir scroll vertical */
+        }
+
+        .derecha {
+            flex-basis: 60%; /* Div derecho ocupa el 70% */
+            background-color: #ffffff;
+
+            max-height: 600px; /* Altura máxima de la sección de resultados */
+            overflow-y: scroll; /* Añadir scroll vertical */
+        }
+
+        .card {
+            margin: 10px;
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+        }
+
+        form {
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+
+        form h4 {
+            margin-top: 10px;
+        }
+
+        form input[type="file"] {
+            margin-top: 0;
+            background-color: #ff0202;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 3%;
+        }
+
+        label {
+            margin-top: 0;
+            background-color: #d69d0c;
+            color: white;
+            padding: 6px 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4%;
+        }
+
+        form input[type="submit"] {
+            margin-top: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10%;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        p {
+            margin-bottom: 5px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card-group">
+        <div class="card izquierda">
+            <div class="card-body">
+                <h2 style="color: blue;">Detector de Plagio/Similitud</h2>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <h5>Seleccione los Documentos:</h5>
+                    {{ formulario.documentos }}
+
+                    <h5>Ingrese el texto:</h5>
+                    {{ formulario.texto }}
+
+                    <h5>Seleccione:</h5>
+                    <ul style="font-size: 14px;">
+                        {% for radio in formulario.seleccion %}
+                            {{ radio }}
+                        {% endfor %}
+                    </ul>
+
+                    <input type="submit" value="Enviar">
+                </form>
+            </div>
+        </div>
+
+        <div class="card derecha">
+            <div class="card-body">
+                <h1><b>Resultados</b></h1>
+                <h2>{{ mensaje }}</h2>
+
+                {% for url, similitud, nombre_documento in resultados %}
+
+                    {% ifchanged nombre_documento %}
+                        <h3>Resultados de: {{ nombre_documento }}</h3>
+                    {% endifchanged %}
+
+                    <li style="font-size: 12px;">Plagio detectado en <a href="{{ url }}">{{ url }}</a> (Similitud de: {{ similitud|floatformat:2 }})</li>
+                {% endfor %}
+
+                {% for mensaje in result %}
+                    <p style="font-size: 12px;">{{ mensaje }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
