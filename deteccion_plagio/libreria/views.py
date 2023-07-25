@@ -67,21 +67,17 @@ SEARCH_ENGINE_ID = "b3efb1284abf04927"
 
 def process_text(text):
 
-  #Tokenizar la cadena
-
   tokenizer = TweetTokenizer(preserve_case=False, strip_handles=True, reduce_len=True)
   text_tokens = tokenizer.tokenize(text)
-
-  #Eliminar stop words y signos de puntuación
 
   stopwords_english = stopwords.words('english')
   text_clean = []
 
   for word in text_tokens:
-      if (word not in stopwords_english):  # remove signos de puntuación
+      if (word not in stopwords_english): 
           text_clean.append(word)
 
-  return ' '.join(text_clean) #array to string
+  return ' '.join(text_clean) 
 
 
 def search_google(query):
@@ -186,7 +182,7 @@ def deteccion(request):
                     extension = os.path.splitext(documento.name)[1].lower()
                     ruta_guardado = os.path.join(settings.MEDIA_ROOT, 'documentos', documento.name)
                     handle_uploaded_file(documento, ruta_guardado)
-                    
+                                    
 
                     if extension == '.pdf':
                         texto_ = extract_text_from_pdf("documentos/"+documento.name)
@@ -256,8 +252,8 @@ def deteccion(request):
                         # Mostrar el resultado de la comparación
                         if similarity_score > 0.6 or similarity_score > 0.6:     
                             result.append(f"El documento {file_name_i} y el documento {file_name_j} posiblemente tienen plagio, Con un porcentaje de {similarity_percentage:.2f}%")
-                        #else:
-                         #   result.append(f"El documento {file_name_i} y el documento {file_name_j} no tienen similitud. No hay plagio.")
+                        else:
+                           result.append(f"El documento {file_name_i} y el documento {file_name_j} no tienen similitud. No hay plagio.")
                            
                         
             else:
@@ -267,3 +263,9 @@ def deteccion(request):
         return render(request, 'paginas/index.html', {'formulario': formulario, 'texto':texto, 'resultados':resultados, 'mensaje': mensaje, 'result':result})
 
     return render(request, 'paginas/index.html', {'formulario': formulario})
+
+
+
+
+
+    
